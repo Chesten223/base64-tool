@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://base64-tool.pages.dev/sitemap.xml

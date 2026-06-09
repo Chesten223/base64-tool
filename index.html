@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Base64 Encode &amp; Decode — Free Online Tool</title>
+<meta name="description" content="Free online Base64 encoder and decoder. Convert text to Base64 and back instantly. Supports URL-safe Base64, file and image encoding to data URIs.">
+<meta name="keywords" content="base64 encoder, base64 decoder, base64 online, encode decode, url safe base64, image to base64, file to base64">
+<link rel="canonical" href="https://base64-tool.pages.dev/">
+<meta property="og:title" content="Base64 Encode &amp; Decode — Free Online Tool">
+<meta property="og:description" content="Free online Base64 encoder and decoder. Convert text to Base64 and back instantly. Supports URL-safe Base64, file and image encoding.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://base64-tool.pages.dev/">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Base64 Encode &amp; Decode — Free Online Tool">
+<meta name="twitter:description" content="Free online Base64 encoder and decoder. Convert text to Base64 and back instantly.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Base64 Encode & Decode",
+  "description": "Free online Base64 encoder and decoder tool. Supports text, URL-safe Base64, and file/image encoding.",
+  "url": "https://base64-tool.pages.dev/",
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "Any",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "browserRequirements": "Requires JavaScript"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is Base64 encoding?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Base64 is a binary-to-text encoding scheme that represents binary data using 64 ASCII characters: A–Z, a–z, 0–9, +, and /. It is commonly used to encode data for safe transport over text-based protocols like email (MIME) and JSON web tokens (JWT)."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is URL-safe Base64?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "URL-safe Base64 replaces + with - and / with _, and typically omits trailing = padding. This variant is defined in RFC 4648 and is used in JWTs, URLs, and filenames where the standard Base64 alphabet would cause issues."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is Base64 encryption?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Base64 is an encoding scheme, not encryption. It provides no confidentiality or security — anyone can decode it. Never use Base64 as a substitute for encryption when handling sensitive data."
+      }
+    }
+  ]
+}
+</script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0d1117;--card:#161b22;--border:#30363d;--text:#e6edf3;--dim:#8b949e;--green:#238636;--blue:#1f6feb;--radius:8px}
+html{scroll-behavior:smooth}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh}
+a{color:var(--blue);text-decoration:none}
+a:hover{text-decoration:underline}
+.container{max-width:960px;margin:0 auto;padding:0 20px}
+header{padding:40px 0 20px;text-align:center}
+header h1{font-size:1.8rem;font-weight:600;margin-bottom:8px}
+header p{color:var(--dim);font-size:1rem}
+
+/* Tabs */
+.tabs{display:flex;gap:4px;margin:24px 0 16px;background:var(--card);border-radius:var(--radius);padding:4px;border:1px solid var(--border);width:fit-content;margin-left:auto;margin-right:auto}
+.tabs button{padding:8px 24px;border:none;background:transparent;color:var(--dim);font-size:.9rem;cursor:pointer;border-radius:6px;transition:all .15s}
+.tabs button.active{background:var(--blue);color:#fff}
+.tabs button:hover:not(.active){color:var(--text)}
+
+/* Options row */
+.options{display:flex;align-items:center;justify-content:center;gap:16px;margin-bottom:12px;flex-wrap:wrap}
+.options label{display:flex;align-items:center;gap:6px;font-size:.85rem;color:var(--dim);cursor:pointer}
+.options input[type=checkbox]{accent-color:var(--blue);width:16px;height:16px}
+
+/* Editor grid */
+.editor{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+@media(max-width:640px){.editor{grid-template-columns:1fr}}
+.editor>div{display:flex;flex-direction:column;gap:6px}
+.editor label{font-size:.8rem;color:var(--dim);font-weight:500;text-transform:uppercase;letter-spacing:.5px}
+textarea{width:100%;height:260px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);font-family:'SF Mono',SFMono-Regular,Consolas,'Liberation Mono',Menlo,monospace;font-size:.875rem;padding:12px;resize:vertical;outline:none;transition:border-color .15s}
+textarea:focus{border-color:var(--blue)}
+textarea::placeholder{color:var(--dim)}
+.output-wrap{position:relative}
+.output-wrap textarea{background:var(--bg);border:1px dashed var(--border)}
+.btn-copy{position:absolute;top:8px;right:8px;padding:4px 12px;background:var(--card);border:1px solid var(--border);border-radius:6px;color:var(--dim);font-size:.75rem;cursor:pointer;transition:all .15s}
+.btn-copy:hover{color:var(--text);border-color:var(--dim)}
+.btn-copy.copied{background:var(--green);color:#fff;border-color:var(--green)}
+
+/* Error */
+.error-msg{color:#f85149;font-size:.8rem;min-height:1.2em}
+
+/* File upload */
+.file-section{margin:20px 0;padding:20px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius)}
+.file-section h3{font-size:1rem;margin-bottom:8px}
+.file-section p{color:var(--dim);font-size:.85rem;margin-bottom:12px}
+.file-drop{border:2px dashed var(--border);border-radius:var(--radius);padding:32px;text-align:center;color:var(--dim);cursor:pointer;transition:border-color .15s}
+.file-drop:hover,.file-drop.dragover{border-color:var(--blue)}
+.file-drop input{display:none}
+.file-result{margin-top:12px;word-break:break-all;font-size:.8rem;font-family:monospace;background:var(--bg);border-radius:var(--radius);padding:12px;max-height:200px;overflow:auto;display:none}
+.file-result.visible{display:block}
+
+/* Features */
+.features{padding:48px 0 32px}
+.features h2{text-align:center;font-size:1.4rem;margin-bottom:32px}
+.features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
+.feature{padding:20px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius)}
+.feature h3{font-size:1rem;margin-bottom:6px;color:var(--text)}
+.feature p{font-size:.85rem;color:var(--dim)}
+
+/* FAQ */
+.faq{padding:32px 0 48px}
+.faq h2{text-align:center;font-size:1.4rem;margin-bottom:24px}
+.faq-item{border:1px solid var(--border);border-radius:var(--radius);margin-bottom:8px;overflow:hidden;background:var(--card)}
+.faq-q{padding:14px 16px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-weight:500;font-size:.95rem;user-select:none}
+.faq-q::after{content:'+';font-size:1.2rem;color:var(--dim);transition:transform .2s}
+.faq-item.open .faq-q::after{content:'−'}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .25s ease}
+.faq-item.open .faq-a{max-height:300px}
+.faq-a p{padding:0 16px 14px;font-size:.9rem;color:var(--dim);line-height:1.7}
+
+/* Footer */
+footer{border-top:1px solid var(--border);padding:24px 0;text-align:center;color:var(--dim);font-size:.8rem}
+footer a{margin:0 10px}
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Base64 Encode &amp; Decode</h1>
+    <p>Free online tool — instant conversion for text, URLs &amp; files</p>
+  </header>
+
+  <main>
+    <!-- Mode tabs -->
+    <div class="tabs" role="tablist">
+      <button role="tab" class="active" data-mode="encode" aria-selected="true">Encode</button>
+      <button role="tab" data-mode="decode" aria-selected="false">Decode</button>
+    </div>
+
+    <!-- Options -->
+    <div class="options">
+      <label><input type="checkbox" id="optUrlSafe"> URL-safe Base64</label>
+      <label><input type="checkbox" id="optLive" checked> Live conversion</label>
+    </div>
+
+    <!-- Editor -->
+    <div class="editor">
+      <div>
+        <label for="input">Input</label>
+        <textarea id="input" placeholder="Type or paste text here…" spellcheck="false"></textarea>
+      </div>
+      <div class="output-wrap">
+        <label for="output">Output</label>
+        <textarea id="output" readonly placeholder="Result appears here…"></textarea>
+        <button class="btn-copy" id="btnCopy" aria-label="Copy output">Copy</button>
+      </div>
+    </div>
+    <div class="error-msg" id="errorMsg"></div>
+
+    <!-- File upload -->
+    <section class="file-section">
+      <h3>Encode files &amp; images to Base64</h3>
+      <p>Drag &amp; drop or click to select a file — the data URI is generated instantly in your browser.</p>
+      <div class="file-drop" id="fileDrop">
+        <input type="file" id="fileInput">
+        <div>Drop a file here or <a href="#">browse</a></div>
+      </div>
+      <div class="file-result" id="fileResult"></div>
+    </section>
+
+    <!-- Features -->
+    <section class="features">
+      <h2>Features</h2>
+      <div class="features-grid">
+        <div class="feature">
+          <h3>Instant conversion</h3>
+          <p>Results appear as you type — no submit button, no server round-trip. Everything runs in your browser.</p>
+        </div>
+        <div class="feature">
+          <h3>URL-safe mode</h3>
+          <p>Toggle URL-safe Base64 that replaces <code>+​/</code> with <code>-​_</code> and strips padding for use in JWTs and query strings.</p>
+        </div>
+        <div class="feature">
+          <h3>File &amp; image support</h3>
+          <p>Upload any file to get its Base64 data URI — perfect for embedding images in HTML, CSS, or JSON.</p>
+        </div>
+        <div class="feature">
+          <h3>Private &amp; offline</h3>
+          <p>All processing happens locally in your browser. Your data is never sent to any server.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq">
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-item">
+        <div class="faq-q">What is Base64 encoding?</div>
+        <div class="faq-a"><p>Base64 is a binary-to-text encoding scheme that represents binary data using 64 ASCII characters: A–Z, a–z, 0–9, <code>+</code>, and <code>/</code>. It is commonly used to encode data for safe transport over text-based protocols like email (MIME) and JSON web tokens (JWT). Every 3 bytes of input produce 4 characters of output, expanding data size by roughly 33%.</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">What is URL-safe Base64?</div>
+        <div class="faq-a"><p>URL-safe Base64 (defined in RFC 4648) replaces <code>+</code> with <code>-</code> and <code>/</code> with <code>_</code>, and typically omits trailing <code>=</code> padding. This variant is used in JWTs, URLs, and filenames where the standard Base64 alphabet would cause issues with parsing or filesystem compatibility.</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Is Base64 encryption?</div>
+        <div class="faq-a"><p>No. Base64 is an encoding scheme, not encryption. It provides no confidentiality or security — anyone can decode it. Never use Base64 as a substitute for encryption when handling sensitive data. Its purpose is to represent binary data in a text-safe format, not to protect information.</p></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <a href="https://base64-tool.pages.dev/">Base64 Tool</a>
+    <a href="https://github.com/Chesten223/base64-tool">GitHub</a>
+    <span>&copy; 2026</span>
+  </footer>
+</div>
+
+<script>
+(function(){
+  const $=s=>document.querySelector(s);
+  const input=$('#input'), output=$('#output'), btnCopy=$('#btnCopy');
+  const errorMsg=$('#errorMsg'), optUrlSafe=$('#optUrlSafe'), optLive=$('#optLive');
+  const fileDrop=$('#fileDrop'), fileInput=$('#fileInput'), fileResult=$('#fileResult');
+  const tabs=document.querySelectorAll('.tabs button');
+  let mode='encode';
+
+  /* Tabs */
+  tabs.forEach(btn=>btn.addEventListener('click',()=>{
+    tabs.forEach(b=>{b.classList.remove('active');b.setAttribute('aria-selected','false')});
+    btn.classList.add('active');btn.setAttribute('aria-selected','true');
+    mode=btn.dataset.mode;
+    input.placeholder=mode==='encode'?'Type or paste text here…':'Paste Base64 string here…';
+    output.placeholder=mode==='encode'?'Base64 output…':'Decoded text…';
+    convert();
+  }));
+
+  /* Live conversion */
+  input.addEventListener('input',()=>{if(optLive.checked)convert()});
+  optUrlSafe.addEventListener('change',convert);
+  optLive.addEventListener('change',()=>{if(optLive.checked)convert()});
+
+  function toUrlSafe(b64){return b64.replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'')}
+  function fromUrlSafe(s){s=s.replace(/-/g,'+').replace(/_/g,'/');while(s.length%4)s+='=';return s}
+
+  function convert(){
+    errorMsg.textContent='';
+    const val=input.value;
+    if(!val){output.value='';return}
+    try{
+      if(mode==='encode'){
+        const bytes=new TextEncoder().encode(val);
+        let binary='';bytes.forEach(b=>binary+=String.fromCharCode(b));
+        let b64=btoa(binary);
+        if(optUrlSafe.checked)b64=toUrlSafe(b64);
+        output.value=b64;
+      }else{
+        let b64=val.trim();
+        if(optUrlSafe.checked)b64=fromUrlSafe(b64);
+        const binary=atob(b64);
+        const bytes=new Uint8Array(binary.length);
+        for(let i=0;i<binary.length;i++)bytes[i]=binary.charCodeAt(i);
+        output.value=new TextDecoder().decode(bytes);
+      }
+    }catch(e){
+      errorMsg.textContent=mode==='decode'?'Invalid Base64 input — check for typos or wrong mode.':'Encoding error.';
+      output.value='';
+    }
+  }
+
+  /* Copy */
+  btnCopy.addEventListener('click',()=>{
+    if(!output.value)return;
+    navigator.clipboard.writeText(output.value).then(()=>{
+      btnCopy.textContent='Copied!';btnCopy.classList.add('copied');
+      setTimeout(()=>{btnCopy.textContent='Copy';btnCopy.classList.remove('copied')},1500);
+    });
+  });
+
+  /* File upload */
+  fileDrop.addEventListener('click',()=>fileInput.click());
+  fileDrop.addEventListener('dragover',e=>{e.preventDefault();fileDrop.classList.add('dragover')});
+  fileDrop.addEventListener('dragleave',()=>fileDrop.classList.remove('dragover'));
+  fileDrop.addEventListener('drop',e=>{
+    e.preventDefault();fileDrop.classList.remove('dragover');
+    if(e.dataTransfer.files.length)encodeFile(e.dataTransfer.files[0]);
+  });
+  fileInput.addEventListener('change',()=>{if(fileInput.files.length)encodeFile(fileInput.files[0])});
+
+  function encodeFile(file){
+    const reader=new FileReader();
+    reader.onload=()=>{
+      fileResult.textContent=reader.result;
+      fileResult.classList.add('visible');
+    };
+    reader.readAsDataURL(file);
+  }
+
+  /* FAQ accordion */
+  document.querySelectorAll('.faq-q').forEach(q=>{
+    q.addEventListener('click',()=>q.parentElement.classList.toggle('open'));
+  });
+})();
+</script>
+</body>
+</html>
